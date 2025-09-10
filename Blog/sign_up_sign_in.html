@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In / Sign Up</title>
+    <link rel="stylesheet" href="../blogging/blog.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            overflow-x: hidden;
+            background: #0f2027; /* fallback for old browsers */
+            background: linear-gradient(135deg, #2c5364 0%, #203a43 50%, #0f2027 100%);
+        }
+        /* Animated background circles */
+        .bg-anim {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.18;
+            animation: float 12s infinite ease-in-out;
+        }
+        .circle1 { width: 320px; height: 320px; background: #39ff14; left: 5vw; top: 10vh; animation-delay: 0s; }
+        .circle2 { width: 220px; height: 220px; background: #ff9800; left: 70vw; top: 20vh; animation-delay: 2s; }
+        .circle3 { width: 180px; height: 180px; background: #1877f3; left: 40vw; top: 70vh; animation-delay: 4s; }
+        .circle4 { width: 140px; height: 140px; background: #ea4335; left: 80vw; top: 80vh; animation-delay: 6s; }
+        @keyframes float {
+            0% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-40px) scale(1.08); }
+            100% { transform: translateY(0) scale(1); }
+        }
+        .auth-container {
+            max-width: 420px;
+            margin: 80px auto;
+            background: rgba(255,255,255,0.97);
+            padding: 38px 32px 28px 32px;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px rgba(44,83,100,0.18);
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 1.2s cubic-bezier(.4,2,.6,1);
+        }
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(60px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .auth-title {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 18px;
+            color: #0077cc;
+            font-weight: bold;
+            letter-spacing: 1px;
+            animation: fadeIn 1.2s;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        .auth-btn {
+            width: 100%;
+            padding: 13px;
+            margin-bottom: 18px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 2px 12px rgba(44,83,100,0.08);
+            transition: box-shadow 0.2s, transform 0.2s, background 0.2s;
+            position: relative;
+            animation: fadeIn 1.2s;
+        }
+        .auth-btn-google {
+            background: #fff;
+            color: #ea4335;
+            border: 1.5px solid #ea4335;
+        }
+        .auth-btn-google:hover {
+            box-shadow: 0 0 18px #ea4335;
+            transform: scale(1.06);
+            background: #fbe9e7;
+        }
+        .auth-btn-facebook {
+            background: #1877f3;
+            color: #fff;
+        }
+        .auth-btn-facebook:hover {
+            box-shadow: 0 0 18px #1877f3;
+            transform: scale(1.06);
+            background: #e3f2fd;
+            color: #1877f3;
+        }
+        .auth-btn-microsoft {
+            background: #f3f3f3;
+            color: #333;
+            border: 1.5px solid #333;
+        }
+        .auth-btn-microsoft:hover {
+            box-shadow: 0 0 18px #333;
+            transform: scale(1.06);
+            background: #e0e0e0;
+        }
+        .or {
+            text-align: center;
+            margin: 18px 0;
+            color: #888;
+            font-weight: bold;
+            letter-spacing: 1px;
+            animation: fadeIn 1.2s;
+        }
+        .form-group {
+            margin-bottom: 18px;
+            animation: fadeInUp 1.2s cubic-bezier(.4,2,.6,1);
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
+            color: #333;
+            font-weight: 500;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 11px;
+            border-radius: 6px;
+            border: 1.5px solid #ccc;
+            font-size: 1em;
+            transition: border 0.2s, box-shadow 0.2s;
+        }
+        .form-group input:focus {
+            border: 1.5px solid #0077cc;
+            box-shadow: 0 0 8px #0077cc33;
+            outline: none;
+        }
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(90deg,#0077cc 0%,#39ff14 100%);
+            color: #fff;
+            border: none;
+            padding: 13px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            box-shadow: 0 2px 12px rgba(44,83,100,0.08);
+            transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+            animation: fadeInUp 1.2s cubic-bezier(.4,2,.6,1);
+        }
+        .submit-btn:hover {
+            background: linear-gradient(90deg,#39ff14 0%,#0077cc 100%);
+            box-shadow: 0 0 18px #39ff14;
+            transform: scale(1.04);
+        }
+        .recommend {
+            margin-top: 24px;
+            padding: 18px;
+            background: #e3f2fd;
+            border-radius: 10px;
+            color: #0077cc;
+            font-size: 1.08em;
+            font-weight: 500;
+            box-shadow: 0 2px 12px rgba(44,83,100,0.08);
+            animation: fadeIn 1.2s;
+        }
+        .recommend strong {
+            color: #ea4335;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-anim">
+        <div class="circle circle1"></div>
+        <div class="circle circle2"></div>
+        <div class="circle circle3"></div>
+        <div class="circle circle4"></div>
+    </div>
+    <div class="auth-container">
+        <div class="auth-title">Sign In / Sign Up</div>
+    <button class="auth-btn auth-btn-google"><img src="https://www.gstatic.com/images/branding/product/1x/gmail_2020q4_48dp.png" alt="Gmail" style="height:24px;width:24px;vertical-align:middle;margin-right:8px;border-radius:8px;box-shadow:0 2px 12px #ea433555, 0 0 0 2px #fff;opacity:0.92;background:rgba(255,255,255,0.7);">Continue with Gmail</button>
+        <button class="auth-btn auth-btn-facebook"><img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png" alt="Facebook" style="height:22px;vertical-align:middle;">Continue with Facebook</button>
+        <button class="auth-btn auth-btn-microsoft"><img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft" style="height:22px;vertical-align:middle;">Continue with Microsoft</button>
+        <div class="or">OR</div>
+        <form>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="submit-btn">Sign In / Sign Up</button>
+        </form>
+        <div class="recommend">
+            <strong>Pro Tip:</strong> Use a strong password and enable two-factor authentication for better security.<br>
+            <strong>Recommendation:</strong> Prefer signing in with Google, Facebook, or Microsoft for a faster and safer experience.
+        </div>
+    </div>
+</body>
+</html>

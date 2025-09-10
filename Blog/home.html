@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        .hero-btn {
+            text-decoration: none !important;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | Shobhit Kumar Dubey</title>
+    <link rel="stylesheet" href="../blogging/blog.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(120deg, #0077cc 0%, #39ff14 100%);
+            overflow-x: hidden;
+        }
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 80vh;
+            color: #fff;
+            text-align: center;
+            animation: fadeInUp 1.2s cubic-bezier(.4,2,.6,1);
+        }
+        .hero-title {
+            font-size: 3em;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 18px;
+            animation: bounceIn 1.2s;
+        }
+        @keyframes bounceIn {
+            0% { opacity: 0; transform: scale(0.8); }
+            60% { opacity: 1; transform: scale(1.1); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        .hero-desc {
+            font-size: 1.4em;
+            margin-bottom: 32px;
+            animation: fadeIn 2s;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        .hero-btn {
+            background: linear-gradient(90deg,#39ff14 0%,#0077cc 100%);
+            color: #fff;
+            border: none;
+            padding: 16px 38px;
+            border-radius: 8px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 12px rgba(44,83,100,0.18);
+            transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 #39ff14; }
+            70% { box-shadow: 0 0 24px 12px #39ff1444; }
+            100% { box-shadow: 0 0 0 0 #39ff14; }
+        }
+        .floating-img {
+            position: absolute;
+            right: 8vw;
+            top: 18vh;
+            width: 180px;
+            border-radius: 50%;
+            box-shadow: 0 8px 32px #0077cc44;
+            animation: floatImg 6s infinite ease-in-out;
+        }
+        @keyframes floatImg {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-30px); }
+            100% { transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+    <h1 class="hero-title">Welcome to My Digital Space!</h1>
+    <div class="hero-desc">Hi, I'm Shobhit Kumar Dubey.<br>Full Stack Developer | Tech Enthusiast | Lifelong Learner</div>
+    <a href="about.html" class="hero-btn" style="margin-bottom:18px;">Learn More About Me</a>
+    <a href="blog.html" class="hero-btn" style="background:linear-gradient(90deg,#ff00cc 0%,#0077cc 100%);margin-bottom:18px;">Start Blogging</a>
+    </div>
+    <img src="https://cdn-icons-png.flaticon.com/512/5968/5968885.png" alt="Blog Logo" class="floating-img" style="right: 4vw; top: 22vh;">
+</body>
+</html>

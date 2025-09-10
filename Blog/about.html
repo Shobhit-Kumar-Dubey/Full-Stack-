@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | Shobhit Kumar Dubey</title>
+    <link rel="stylesheet" href="../blogging/blog.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(120deg, #39ff14 0%, #0077cc 100%);
+            overflow-x: hidden;
+        }
+        .about-container {
+            max-width: 700px;
+            margin: 60px auto;
+            background: rgba(255,255,255,0.97);
+            padding: 38px 32px 28px 32px;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px rgba(44,83,100,0.18);
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 1.2s cubic-bezier(.4,2,.6,1);
+        }
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(60px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .about-title {
+            text-align: center;
+            font-size: 2.2em;
+            margin-bottom: 18px;
+            color: #0077cc;
+            font-weight: bold;
+            letter-spacing: 1px;
+            animation: fadeIn 1.2s;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        .about-img {
+            display: block;
+            margin: 0 auto 24px auto;
+            width: 140px;
+            border-radius: 50%;
+            box-shadow: 0 4px 18px #39ff1444;
+            animation: floatImg 6s infinite ease-in-out;
+        }
+        @keyframes floatImg {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-18px); }
+            100% { transform: translateY(0); }
+        }
+        .about-info {
+            font-size: 1.18em;
+            color: #222;
+            line-height: 1.7;
+            animation: fadeInUp 1.2s cubic-bezier(.4,2,.6,1);
+        }
+        .about-highlight {
+            color: #0077cc;
+            font-weight: bold;
+            background: #e3f2fd;
+            border-radius: 6px;
+            padding: 2px 8px;
+            margin: 0 2px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 #39ff14; }
+            70% { box-shadow: 0 0 18px 8px #39ff1444; }
+            100% { box-shadow: 0 0 0 0 #39ff14; }
+        }
+    </style>
+</head>
+<body>
+    <div class="about-container">
+        <h1 class="about-title">About Me</h1>
+    <img src="https://cdn-icons-png.flaticon.com/512/5968/5968885.png" alt="Blog Logo" class="about-img" style="margin-left: 40px;">
+        <div class="about-info">
+            Hello! I'm <span class="about-highlight">Shobhit Kumar Dubey</span>, a passionate <span class="about-highlight">Full Stack Developer</span> and technology enthusiast. I love building web applications, exploring new frameworks, and sharing knowledge with the community.<br><br>
+            My journey in tech started with curiosity and a drive to solve real-world problems. Over time, I've worked on various projects, from static websites to dynamic full-stack apps. I enjoy learning new things, whether it's a new programming language, a design trend, or a productivity hack.<br><br>
+            <span class="about-highlight">Skills:</span> HTML, CSS, JavaScript, Python, Node.js, React, Express, MongoDB, SQL, and more.<br>
+            <span class="about-highlight">Interests:</span> Coding, blogging, chess, open-source, and lifelong learning.<br>
+            <span class="about-highlight">Philosophy:</span> "Keep learning, keep building, and always help others grow."
+        </div>
+    </div>
+</body>
+</html>
