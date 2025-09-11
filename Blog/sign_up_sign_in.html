@@ -189,7 +189,7 @@
     </div>
     <div class="auth-container">
         <div class="auth-title">Sign In / Sign Up</div>
-    <button class="auth-btn auth-btn-google"><img src="https://www.gstatic.com/images/branding/product/1x/gmail_2020q4_48dp.png" alt="Gmail" style="height:24px;width:24px;vertical-align:middle;margin-right:8px;border-radius:8px;box-shadow:0 2px 12px #ea433555, 0 0 0 2px #fff;opacity:0.92;background:rgba(255,255,255,0.7);">Continue with Gmail</button>
+        <button class="auth-btn auth-btn-google"><img src="https://www.gstatic.com/images/branding/product/1x/gmail_2020q4_48dp.png" alt="Gmail" style="height:24px;width:24px;vertical-align:middle;margin-right:8px;border-radius:8px;box-shadow:0 2px 12px #ea433555, 0 0 0 2px #fff;opacity:0.92;background:rgba(255,255,255,0.7);">Continue with Gmail</button>
         <button class="auth-btn auth-btn-facebook"><img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png" alt="Facebook" style="height:22px;vertical-align:middle;">Continue with Facebook</button>
         <button class="auth-btn auth-btn-microsoft"><img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft" style="height:22px;vertical-align:middle;">Continue with Microsoft</button>
         <div class="or">OR</div>
@@ -209,5 +209,45 @@
             <strong>Recommendation:</strong> Prefer signing in with Google, Facebook, or Microsoft for a faster and safer experience.
         </div>
     </div>
+    <script>
+function saveUser(email, password) {
+    let users = JSON.parse(localStorage.getItem('users') || '[]');
+    // Check if user already exists
+    if (users.some(u => u.email === email)) {
+        alert('User already exists. Please sign in.');
+        return false;
+    }
+    users.push({ email, password });
+    localStorage.setItem('users', JSON.stringify(users));
+    return true;
+}
+
+function findUser(email, password) {
+    let users = JSON.parse(localStorage.getItem('users') || '[]');
+    return users.find(u => u.email === email && u.password === password);
+}
+
+document.querySelector('.auth-container form').onsubmit = function(e) {
+    e.preventDefault();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+    let users = JSON.parse(localStorage.getItem('users') || '[]');
+    if (users.some(u => u.email === email)) {
+        // Try sign in
+        if (findUser(email, password)) {
+            alert('Sign in successful!');
+            // Redirect or show logged-in UI here
+        } else {
+            alert('Incorrect password.');
+        }
+    } else {
+        // Sign up
+        if (saveUser(email, password)) {
+            alert('Sign up successful! You can now sign in.');
+        }
+    }
+    this.reset();
+};
+</script>
 </body>
 </html>

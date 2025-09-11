@@ -128,11 +128,14 @@
     <div class="container">
         <h1>My Blog</h1>
     <button id="showPostForm" class="hero-btn" style="margin-bottom:24px;">Create Post</button>
+        <!-- Add new fields to the post form -->
         <form id="postForm" style="display:none; margin-bottom:32px; background:#e3f2fd; padding:18px 24px; border-radius:12px; box-shadow:0 2px 12px #0077cc22; animation:fadeInUp 1.2s;">
             <h2 style="color:#0077cc;">New Post</h2>
             <input type="text" id="postTitle" placeholder="Title" required style="width:100%;padding:10px;margin-bottom:12px;border-radius:6px;border:1px solid #ccc;font-size:1em;">
             <textarea id="postContent" placeholder="Content" required style="width:100%;padding:10px;margin-bottom:12px;border-radius:6px;border:1px solid #ccc;font-size:1em;min-height:80px;"></textarea>
             <input type="text" id="postImage" placeholder="Image URL (optional)" style="width:100%;padding:10px;margin-bottom:12px;border-radius:6px;border:1px solid #ccc;font-size:1em;">
+            <input type="text" id="postVideo" placeholder="Video URL (optional)" style="width:100%;padding:10px;margin-bottom:12px;border-radius:6px;border:1px solid #ccc;font-size:1em;">
+            <textarea id="postTS" placeholder="TypeScript code (optional)" style="width:100%;padding:10px;margin-bottom:12px;border-radius:6px;border:1px solid #ccc;font-size:1em;min-height:60px;"></textarea>
             <button type="submit" class="hero-btn" style="background:#0077cc;">Add Post</button>
         </form>
         <div id="posts">
@@ -171,31 +174,105 @@
         <a href="mailto:shobhitdubeyofficial@gmail.com">Email</a>
     </footer>
     <script>
-    // Show/hide post form
-    document.getElementById('showPostForm').onclick = function() {
-        var form = document.getElementById('postForm');
-        form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
-    };
-    // Add new post
-    document.getElementById('postForm').onsubmit = function(e) {
-        e.preventDefault();
-        var title = document.getElementById('postTitle').value.trim();
-        var content = document.getElementById('postContent').value.trim();
-        var image = document.getElementById('postImage').value.trim();
-        if (!title || !content) return;
-        var postDiv = document.createElement('div');
+function getYouTubeId(url) {
+    // Handles both youtube.com and youtu.be links
+    let id = '';
+    if (url.includes('youtube.com')) {
+        const match = url.match(/[?&]v=([^&#]+)/);
+        if (match) id = match[1];
+    } else if (url.includes('youtu.be')) {
+        id = url.split('/').pop();
+    }
+    return id;
+}
+
+function getYouTubeThumbnail(id) {
+    return `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+}
+
+document.getElementById('showPostForm').onclick = function() {
+    var form = document.getElementById('postForm');
+    form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
+};
+
+function savePostsToLocalStorage(posts) {
+    localStorage.setItem('blogPosts', JSON.stringify(posts));
+}
+
+function loadPostsFromLocalStorage() {
+    return JSON.parse(localStorage.getItem('blogPosts') || '[]');
+}
+
+document.getElementById('postForm').onsubmit = function(e) {
+    e.preventDefault();
+    var title = document.getElementById('postTitle').value.trim();
+    var content = document.getElementById('postContent').value.trim();
+    var image = document.getElementById('postImage').value.trim();
+    var video = document.getElementById('postVideo').value.trim();
+    var tsCode = document.getElementById('postTS').value.trim();
+    if (!title || !content) return;
+    var date = new Date().toLocaleDateString();
+
+    // Create post object
+    var postObj = { title, content, image, video, tsCode, date };
+
+    // Load, update, and save posts
+    var posts = loadPostsFromLocalStorage();
+    posts.unshift(postObj);
+    savePostsToLocalStorage(posts);
+
+    // Render the new post
+    renderPosts(posts);
+
+    document.getElementById('postForm').reset();
+    document.getElementById('postForm').style.display = 'none';
+};
+
+function renderPosts(posts) {
+    const postsDiv = document.getElementById('posts');
+    postsDiv.innerHTML = '';
+    posts.forEach(postObj => {
+        let videoHtml = '';
+        if (postObj.video) {
+            if (postObj.video.includes('youtube.com') || postObj.video.includes('youtu.be')) {
+                const ytId = getYouTubeId(postObj.video);
+                if (ytId) {
+                    videoHtml = `
+                        <iframe width="100%" height="315"
+                            src="https://www.youtube.com/embed/${ytId}?rel=0&modestbranding=1&showinfo=0"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen
+                            style="border-radius:8px;">
+                        </iframe>
+                    `;
+                }
+            } else if (postObj.video.endsWith('.mp4')) {
+                videoHtml = `<video controls style='width:100%;border-radius:6px;margin-top:12px;'><source src='${postObj.video}' type='video/mp4'>Your browser does not support the video tag.</video>`;
+            }
+        }
+        const postDiv = document.createElement('div');
         postDiv.className = 'post';
         postDiv.style.animation = 'fadeInUp 1.2s';
-        var date = new Date().toLocaleDateString();
         postDiv.innerHTML =
-            (image ? `<img class='post-image' src='${image}' alt='${title}'>` : '') +
-            `<div class='post-title'>${title}</div>` +
-            `<div class='post-date'>${date}</div>` +
-            `<div class='post-content'><p>${content}</p></div>`;
-        document.getElementById('posts').prepend(postDiv);
-        document.getElementById('postForm').reset();
-        document.getElementById('postForm').style.display = 'none';
-    };
+            (postObj.image ? `<img class='post-image' src='${postObj.image}' alt='${postObj.title}'>` : '') +
+            `<div class='post-title'>${postObj.title}</div>` +
+            `<div class='post-date'>${postObj.date}</div>` +
+            `<div class='post-content'><p>${postObj.content}</p>` +
+            videoHtml +
+            (postObj.tsCode ? `<pre style='background:#f4f4f9;padding:12px;border-radius:6px;margin-top:12px;overflow:auto;'>${postObj.tsCode}</pre>` : '') +
+            `</div>`;
+        postsDiv.appendChild(postDiv);
+    });
+}
+
+// On page load, render posts from localStorage
+window.onload = function() {
+    const posts = loadPostsFromLocalStorage();
+    if (posts.length) {
+        renderPosts(posts);
+    }
+};
     </script>
 </body>
 </html>
